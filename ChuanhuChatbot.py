@@ -8,7 +8,7 @@ import requests
 # import markdown
 import csv
 
-my_api_key = ""    # 在这里输入你的 API 密钥
+my_api_key = ""    # ここに API キーを入力してください
 initial_prompt = "You are a helpful assistant."
 API_URL = "https://api.openai.com/v1/chat/completions"
 HISTORY_DIR = "history"
@@ -219,7 +219,7 @@ def compose_user(user_input):
 def reset_textbox():
     return gr.update(value='')
 
-title = """<h1 align="center">川虎ChatGPT 🚀</h1>"""
+title = """<h1 align="center">川虎ChatGPT 日本語版　🚀</h1>"""
 description = """<div align=center>
 
 由Bilibili [土川虎虎虎](https://space.bilibili.com/29125536) 开发
