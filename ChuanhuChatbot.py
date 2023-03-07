@@ -88,8 +88,8 @@ def predict(inputs, top_p, temperature, openai_api_key, chatbot=[], history=[], 
         messages.pop()
     elif summary and chat_counter:
         messages.append(compose_user(
-            "请帮我总结一下上述对话的内容，实现减少字数的同时，保证对话的质量。在总结中不要加入这一句话。"))
-        history = ["我们刚刚聊了什么？"]
+            "会話の質を確保しながら文字数を減らすために、上記の会話の内容を要約するのを手伝ってください。この文を要約に含めないでください。"))
+        history = ["今何について話しましたか？"]
     else:
         temp3 = {}
         temp3["role"] = "user"
@@ -134,7 +134,7 @@ def predict(inputs, top_p, temperature, openai_api_key, chatbot=[], history=[], 
                     break
             except Exception as e:
                 chatbot.pop()
-                chatbot.append((history[-1], f"☹️发生了错误\n返回值：{response.text}\n异常：{e}"))
+                chatbot.append((history[-1], f"☹エラーが発生しました\n戻り値：{response.text}\エラー：{e}"))
                 history.pop()
                 yield chatbot, history
                 break
@@ -224,64 +224,64 @@ description = """<div align=center>
 
 由Bilibili [土川虎虎虎](https://space.bilibili.com/29125536) 开发
 
-访问川虎ChatGPT的 [GitHub项目](https://github.com/GaiZhenbiao/ChuanhuChatGPT) 下载最新版脚本
+访问川虎ChatGPT的 [GitHub项目](https://github.com/GaiZhenbiao/ChuanhuChatGPT) スクリプトの最新バージョンをダウンロードする
 
-此App使用 `gpt-3.5-turbo` 大语言模型
+このアプリは「gpt-3.5-turbo」ビッグ ランゲージ モデルを使用しています
 </div>
 """
 with gr.Blocks() as demo:
     gr.HTML(title)
-    keyTxt = gr.Textbox(show_label=True, placeholder=f"在这里输入你的OpenAI API-key...",
+    keyTxt = gr.Textbox(show_label=True, placeholder=f"ここにあなたのOpenAI API-keyを入力してください...",
                         value=my_api_key, label="API Key", type="password").style(container=True)
     chatbot = gr.Chatbot()  # .style(color_map=("#1D51EE", "#585A5B"))
     history = gr.State([])
     promptTemplates = gr.State({})
     TRUECOMSTANT = gr.State(True)
     FALSECONSTANT = gr.State(False)
-    topic = gr.State("未命名对话历史记录")
+    topic = gr.State("無題の会話履歴")
 
     with gr.Row():
         with gr.Column(scale=12):
-            txt = gr.Textbox(show_label=False, placeholder="在这里输入").style(
+            txt = gr.Textbox(show_label=False, placeholder="ここに入力").style(
                 container=False)
         with gr.Column(min_width=50, scale=1):
             submitBtn = gr.Button("🚀", variant="primary")
     with gr.Row():
-        emptyBtn = gr.Button("🧹 新的对话")
-        retryBtn = gr.Button("🔄 重新生成")
-        delLastBtn = gr.Button("🗑️ 删除上条对话")
-        reduceTokenBtn = gr.Button("♻️ 总结对话")
-    systemPromptTxt = gr.Textbox(show_label=True, placeholder=f"在这里输入System Prompt...",
+        emptyBtn = gr.Button("🧹 新しい対話")
+        retryBtn = gr.Button("🔄 再生する")
+        delLastBtn = gr.Button("🗑️ 最後の会話を削除する")
+        reduceTokenBtn = gr.Button("♻️ 会話を要約する")
+    systemPromptTxt = gr.Textbox(show_label=True, placeholder=f"ここにSystem Promptを入力...",
                                  label="System prompt", value=initial_prompt).style(container=True)
-    with gr.Accordion(label="加载Prompt模板", open=False):
+    with gr.Accordion(label="Prompt Templateをロードする", open=False):
         with gr.Column():
             with gr.Row():
                 with gr.Column(scale=6):
-                    templateFileSelectDropdown = gr.Dropdown(label="选择Prompt模板集合文件（.csv）", choices=get_template_names(plain=True), multiselect=False)
+                    templateFileSelectDropdown = gr.Dropdown(label="プロンプト テンプレート コレクション ファイルを選択します（.csv）", choices=get_template_names(plain=True), multiselect=False)
                 with gr.Column(scale=1):
-                    templateRefreshBtn = gr.Button("🔄 刷新")
-                    templaeFileReadBtn = gr.Button("📂 读入模板")
+                    templateRefreshBtn = gr.Button("🔄 更新")
+                    templaeFileReadBtn = gr.Button("📂 テンプレートを読み込む")
             with gr.Row():
                 with gr.Column(scale=6):
-                    templateSelectDropdown = gr.Dropdown(label="从Prompt模板中加载", choices=[], multiselect=False)
+                    templateSelectDropdown = gr.Dropdown(label="プロンプト テンプレートから読み込む", choices=[], multiselect=False)
                 with gr.Column(scale=1):
-                    templateApplyBtn = gr.Button("⬇️ 应用")
-    with gr.Accordion(label="保存/加载对话历史记录(在文本框中输入文件名，点击“保存对话”按钮，历史记录文件会被存储到Python文件旁边)", open=False):
+                    templateApplyBtn = gr.Button("⬇️ 応用")
+    with gr.Accordion(label="会話履歴の保存/読み込み (テキスト ボックスにファイル名を入力し、[会話を保存] ボタンをクリックすると、Python ファイルの隣に履歴ファイルが保存されます)", open=False):
         with gr.Column():
             with gr.Row():
                 with gr.Column(scale=6):
                     saveFileName = gr.Textbox(
-                        show_label=True, placeholder=f"在这里输入保存的文件名...", label="设置保存文件名", value="对话历史记录").style(container=True)
+                        show_label=True, placeholder=f"保存したファイル名をここに入力...", label="保存ファイル名を設定", value="会話履歴").style(container=True)
                 with gr.Column(scale=1):
-                    saveBtn = gr.Button("💾 保存对话")
+                    saveBtn = gr.Button("💾 会話を保存")
             with gr.Row():
                 with gr.Column(scale=6):
-                    historyFileSelectDropdown = gr.Dropdown(label="从列表中加载对话", choices=get_history_names(plain=True), multiselect=False)
+                    historyFileSelectDropdown = gr.Dropdown(label="リストから会話を読み込む", choices=get_history_names(plain=True), multiselect=False)
                 with gr.Column(scale=1):
-                    historyRefreshBtn = gr.Button("🔄 刷新")
-                    historyReadBtn = gr.Button("📂 读入对话")
+                    historyRefreshBtn = gr.Button("🔄 更新")
+                    historyReadBtn = gr.Button("📂 会話で読む")
     #inputs, top_p, temperature, top_k, repetition_penalty
-    with gr.Accordion("参数", open=False):
+    with gr.Accordion("パラメータ", open=False):
         top_p = gr.Slider(minimum=-0, maximum=1.0, value=1.0, step=0.05,
                           interactive=True, label="Top-p (nucleus sampling)",)
         temperature = gr.Slider(minimum=-0, maximum=5.0, value=1.0,
@@ -313,9 +313,9 @@ with gr.Blocks() as demo:
     templaeFileReadBtn.click(load_template, [templateFileSelectDropdown],  [promptTemplates, templateSelectDropdown], show_progress=True)
     templateApplyBtn.click(lambda x, y: x[y], [promptTemplates, templateSelectDropdown],  [systemPromptTxt], show_progress=True)
 
-print("川虎的温馨提示：访问 http://localhost:7860 查看界面")
+print("Chuanhu からのヒント: http://localhost:7860 にアクセスしてインターフェイスを表示します")
 # 默认开启本地服务器，默认可以直接从IP访问，默认不创建公开分享链接
-demo.title = "川虎ChatGPT 🚀"
+demo.title = "川虎ChatGPT　日本語版 🚀"
 
 #if running in Docker
 if dockerflag:
