@@ -1,10 +1,54 @@
 <img height="128" align="left" src="https://user-images.githubusercontent.com/51039745/222689546-7612df0e-e28b-4693-9f5f-4ef2be3daf48.png" alt="Logo">
 
-# 川虎 ChatGPT / Chuanhu ChatGPT
+# 川虎 ChatGPT / Chuanhu ChatGPT 日本語版
 
 [![LICENSE](https://img.shields.io/github/license/GaiZhenbiao/ChuanhuChatGPT)](https://github.com/GaiZhenbiao/ChuanhuChatGPT/blob/main/LICENSE)
 [![Base](https://img.shields.io/badge/Base-Gradio-fb7d1a?style=flat)](https://gradio.app/)
 [![Bilibili](https://img.shields.io/badge/Bilibili-%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B-ff69b4?style=flat&logo=bilibili)](https://www.bilibili.com/video/BV1mo4y1r7eE)
+
+## 日本語版での使用方法の説明
+これは本家、[ChuanhuChatGPT](https://github.com/GaiZhenbiao/ChuanhuChatGPT)の日本語翻訳版です。
+中国語だと使いにくいので日本語に簡単に翻訳しました。
+日本語版ではDockerのインストールまでは対応しておらず、中国語になります。
+日本語版を使用したい場合は、このリポジトリをcloneして、以下の手順で起動してください。
+
+### 依存関係をインストールする
+
+```
+pip install -r requirements.txt
+```
+
+エラーが発生した場合は、お試しください
+
+```
+pip3 install -r requirements.txt
+```
+
+それでもうまくいかない場合は、まず [Python をインストール](https://www.runoob.com/python/python-install.html) してください。
+
+ダウンロードが遅い場合は、[Tsinghua ソースの構成](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/) 、または科学オンラインをお勧めします。
+
+### 起動
+
+```
+python ChuanhuChatbot.py
+```
+
+エラーが発生した場合は、お試しください
+
+```
+python3 ChuanhuChatbot.py
+```
+
+それでもうまくいかない場合は、まず [Python をインストール](https://www.runoob.com/python/python-install.html) してください。。
+
+デフォルトなら、http://localhost:7860/ にアクセスすれば以下の画面を見られるはずです。
+
+![image](https://user-images.githubusercontent.com/39441950/223326017-c5425376-add7-44ef-8171-c12917579ca8.png)
+
+
+以下本家中国語版のReadMe
+
 
 ---
 
